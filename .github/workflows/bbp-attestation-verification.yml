@@ -1,0 +1,18 @@
+name: bbp-attestation-verification
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+  id-token: write
+  attestations: write
+  artifact-metadata: write
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create dummy subject
+        run: printf 'bbp-probe-2026-10-22\n' > probe.txt
+      - name: Create genuine attestation
+        uses: actions/attest@v4
+        with:
+          subject-path: probe.txt
